@@ -197,21 +197,31 @@ const tecladoVirtual = document.getElementById('teclado-virtual');
 let inputAtivo = null;
 let tipoTecladoAtual = null;
 
-function criarTeclado() {
-    // QWERTY em 4 linhas, última só símbolos e espaço
-    const linhas = [
-        ['q','w','e','r','t','y','u','i','o','p'],
-        ['a','s','d','f','g','h','j','k','l'],
-        ['z','x','c','v','b','n','m','←'],
-        ['_','-','Espaço','.','@','OK']
-    ];
+function criarTeclado(tipo = 'text') {
+    let linhas;
+    if (tipo === 'number') {
+        linhas = [
+            ['1','2','3'],
+            ['4','5','6'],
+            ['7','8','9'],
+            ['0','←','OK']
+        ];
+    } else {
+        // QWERTY em 4 linhas, última só símbolos e espaço
+        linhas = [
+            ['q','w','e','r','t','y','u','i','o','p'],
+            ['a','s','d','f','g','h','j','k','l'],
+            ['z','x','c','v','b','n','m'],
+            ['_','-','Espaço','.','@','←','OK']
+        ];
+    }
     tecladoVirtual.innerHTML = '';
-    linhas.forEach((linha, idx) => {
+    linhas.forEach((linha) => {
         const divLinha = document.createElement('div');
         divLinha.className = 'linha-teclado';
         linha.forEach(tecla => {
             const btn = document.createElement('button');
-            btn.className = 'tecla' + (['←','Limpar','OK','Espaço'].includes(tecla) ? ' tecla-func' : '');
+            btn.className = 'tecla' + (['←','OK','Espaço'].includes(tecla) ? ' tecla-func' : '');
             btn.textContent = tecla;
             if (tecla === 'Espaço') btn.style.minWidth = '120px';
             btn.onclick = () => teclaClicada(tecla);
@@ -236,6 +246,10 @@ function teclaClicada(tecla) {
         inputAtivo.value = inputAtivo.value.slice(0, -1);
         return;
     }
+    if (tecla === 'Espaço') {
+        inputAtivo.value += ' ';
+        return;
+    }
     // Limita tamanho para CPF e telefone
     if (inputAtivo.id === 'cpf' && inputAtivo.value.length >= 11) return;
     if (inputAtivo.id === 'telefone' && inputAtivo.value.length >= 11) return;
@@ -245,7 +259,11 @@ function teclaClicada(tecla) {
 [nomeInput, telefoneInput, emailInput, cpfInput].forEach(input => {
     input.addEventListener('focus', function(e) {
         inputAtivo = e.target;
-        criarTeclado('text');
+        if (input.id === 'cpf' || input.id === 'telefone') {
+            criarTeclado('number');
+        } else {
+            criarTeclado('text');
+        }
     });
     // Não esconde mais o teclado ao perder foco
 });
