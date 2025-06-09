@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Memória</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Jogo da Memória</h1>
+    <!-- Tela de Cadastro -->
+    <section id="cadastro-section">
+        <form id="cadastro-form">
+            <label>Nome:<br><input type="text" id="nome" required></label><br>
+            <label>Telefone:<br><input type="tel" id="telefone" required pattern="\d{10,11}"></label><br>
+            <label>E-mail:<br><input type="email" id="email" required></label><br>
+            <label>CPF:<br><input type="text" id="cpf" required pattern="\d{11}"></label><br>
+            <button type="submit">Prosseguir</button>
+            <div id="cadastro-erro" style="color:red;"></div>
+        </form>
+    </section>
+    <!-- Tela do Jogo -->
+    <section id="jogo-section" style="display:none;">
+        <div id="info-bar">
+            <span id="memorizar-timer"></span>
+            <span id="jogo-timer"></span>
+            <span id="tentativas"></span>
+        </div>
+        <div id="game-board"></div>
+        <button id="restart-btn">Reiniciar</button>
+    </section>
+    <!-- Tela de Premiação -->
+    <section id="premio-section" style="display:none;">
+        <h2>Parabéns!</h2>
+        <p>Você ganhou! Em breve receberá um brinde.</p>
+    </section>
+    <!-- Tela de Não Foi Dessa Vez -->
+    <section id="fail-section" style="display:none;">
+        <h2>Não foi dessa vez!</h2>
+        <p>Você não ganhou desta vez. Tente novamente em outra oportunidade.</p>
+    </section>
+    <script src="script.js"></script>
+</body>
+</html>
