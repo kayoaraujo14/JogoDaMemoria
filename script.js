@@ -1,5 +1,4 @@
 const board = document.getElementById('game-board');
-const restartBtn = document.getElementById('restart-btn');
 
 // Seletores das telas
 const cadastroSection = document.getElementById('cadastro-section');
@@ -37,12 +36,19 @@ function shuffle(array) {
     return array;
 }
 
+// Teclado virtual só aparece na tela de cadastro
+const tecladoVirtual = document.getElementById('teclado-virtual');
 function showSection(section) {
     cadastroSection.style.display = 'none';
     jogoSection.style.display = 'none';
     premioSection.style.display = 'none';
     failSection.style.display = 'none';
     section.style.display = 'block';
+    if (section === cadastroSection) {
+        tecladoVirtual.style.display = 'block';
+    } else {
+        tecladoVirtual.style.display = 'none';
+    }
 }
 
 function validarCPF(cpf) {
@@ -85,7 +91,7 @@ cadastroForm.onsubmit = function(e) {
 };
 
 function iniciarJogo() {
-    // Configura matriz 4x5
+    // Configura matriz 4x5, cartas maiores e mais espaçadas
     board.innerHTML = '';
     tentativas = 0;
     tentativasSpan.textContent = 'Tentativas: 0';
@@ -102,8 +108,9 @@ function iniciarJogo() {
         board.appendChild(card);
         return card;
     });
-    board.style.gridTemplateColumns = 'repeat(5, 80px)';
-    board.style.gridGap = '10px';
+    // Cartas maiores e tabuleiro mais espaçado
+    board.style.gridTemplateColumns = 'repeat(5, 120px)';
+    board.style.gridGap = '24px';
     // Mostrar todas as cartas por 10s
     cards.forEach(card => {
         card.classList.add('flipped');
@@ -190,10 +197,28 @@ function encerrarJogo(venceu) {
     }
 }
 
-restartBtn.addEventListener('click', iniciarJogo);
+// Botões de voltar para cadastro nas telas de premiação e falha
+const voltarCadastroPremio = document.getElementById('voltar-cadastro-premio');
+const voltarCadastroFail = document.getElementById('voltar-cadastro-fail');
+
+function resetarCadastro() {
+    // Limpa campos e erros
+    cadastroForm.reset();
+    cadastroErro.textContent = '';
+    // Mostra tela de cadastro
+    showSection(cadastroSection);
+    // Foca no primeiro campo
+    nomeInput.focus();
+}
+
+if (voltarCadastroPremio) {
+    voltarCadastroPremio.onclick = resetarCadastro;
+}
+if (voltarCadastroFail) {
+    voltarCadastroFail.onclick = resetarCadastro;
+}
 
 // Teclado virtual sempre aparente
-const tecladoVirtual = document.getElementById('teclado-virtual');
 let inputAtivo = null;
 let tipoTecladoAtual = null;
 
@@ -259,16 +284,20 @@ function teclaClicada(tecla) {
 [nomeInput, telefoneInput, emailInput, cpfInput].forEach(input => {
     input.addEventListener('focus', function(e) {
         inputAtivo = e.target;
-        if (input.id === 'cpf' || input.id === 'telefone') {
-            criarTeclado('number');
-        } else {
-            criarTeclado('text');
+        // Só mostra/atualiza o teclado se estiver na tela de cadastro
+        if (cadastroSection.style.display === 'block') {
+            if (input.id === 'cpf' || input.id === 'telefone') {
+                criarTeclado('number');
+            } else {
+                criarTeclado('text');
+            }
         }
     });
-    // Não esconde mais o teclado ao perder foco
 });
-// Inicializa teclado padrão (nome)
-criarTeclado('text');
+// Inicializa teclado padrão (nome) só se estiver na tela de cadastro
+if (cadastroSection.style.display === 'block') {
+    criarTeclado('text');
+}
 
 // Inicialização: mostrar tela de cadastro
 showSection(cadastroSection);

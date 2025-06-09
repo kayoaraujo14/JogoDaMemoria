@@ -141,73 +141,67 @@ h1 {
 }
 #game-board {
     display: grid;
-    grid-template-columns: repeat(5, 80px);
-    grid-gap: 10px;
-    margin: 20px 0;
+    grid-template-columns: repeat(5, 120px);
+    grid-gap: 24px;
+    margin: 32px 0 32px 0;
+    justify-content: center;
+    align-items: center;
+    background: #eaf6e6;
+    border-radius: 24px;
+    box-shadow: 0 8px 32px 0 #3FA01022, 0 2px 8px 0 rgba(0,0,0,0.10);
+    padding: 32px 0;
 }
 .card {
-    width: 80px;
-    height: 80px;
-    font-size: 2rem;
+    width: 120px;
+    height: 120px;
+    font-size: 3.2rem;
     background: #fff;
     color: #3FA010;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(63,160,16,0.08);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(63,160,16,0.13), 0 1.5px 6px 0 rgba(0,0,0,0.08);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     user-select: none;
-    transition: transform 0.2s, background 0.2s, color 0.2s;
+    transition: transform 0.25s, background 0.2s, color 0.2s, box-shadow 0.2s;
     position: relative;
     font-weight: bold;
+    border: 3px solid #b2d8b2;
+    animation: cardPop 0.5s;
 }
 .card.flipped, .card.matched {
-    background: #3FA010;
+    background: linear-gradient(135deg, #3FA010 80%, #6edc3b 100%);
     color: #fff;
     cursor: default;
-    transform: scale(1.05);
+    transform: scale(1.08) rotate(-2deg);
+    box-shadow: 0 8px 32px #3FA01044;
+    border: 3px solid #3FA010;
 }
-#restart-btn {
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    background: #fff;
-    color: #3FA010;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-    margin: 0 auto;
-    display: block;
+.card:hover:not(.flipped):not(.matched) {
+    transform: scale(1.04);
+    box-shadow: 0 8px 32px #3FA01033;
+    border: 3px solid #6edc3b;
 }
-#restart-btn:hover {
-    background: #b2d8b2;
-    color: #fff;
+@keyframes cardPop {
+    0% { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
 }
-#premio-section h2, #fail-section h2 {
-    color: #fff;
-    text-align: center;
-    font-weight: bold;
-}
-#fail-section h2 {
-    color: #fff;
-}
-#premio-section p, #fail-section p {
-    text-align: center;
-    font-size: 1.1rem;
-    color: #fff;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 #teclado-virtual {
     position: fixed;
     left: 50%;
-    bottom: 950px;
+    bottom: 120px;
     transform: translateX(-50%);
     width: auto;
     min-width: 0;
     max-width: none;
     background: transparent;
     border: none;
+    border-radius: 0;
     box-shadow: none;
     padding: 0;
     z-index: 1000;
@@ -216,42 +210,34 @@ h1 {
     align-items: center;
     gap: 0;
     animation: fadeIn 0.3s;
-}
-.teclado-bg {
-    background: #fff;
-    border-radius: 32px;
-    box-shadow: 0 8px 32px 0 #3FA01022, 0 2px 8px 0 rgba(0,0,0,0.10);
-    padding: 18px 12px 18px 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
+    box-sizing: border-box;
 }
 .linha-teclado {
     display: flex;
     justify-content: center;
-    margin-bottom: 7px;
+    margin-bottom: 10px;
     width: 100%;
-    gap: 7px;
+    gap: 8px;
 }
 .linha-teclado:last-child {
     margin-bottom: 0;
 }
 .tecla {
-    width: 44px;
-    height: 44px;
+    flex: 1 1 0;
+    max-width: 56px;
+    height: 56px;
     background: #3FA010;
     color: #fff;
-    font-size: 1.1rem;
+    font-size: 1.6rem;
     border: none;
-    border-radius: 10px;
-    margin: 0 2px;
+    border-radius: 14px;
+    margin: 0;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.12s;
     box-shadow: 0 2px 8px #3FA01022;
-    min-width: 36px;
-    min-height: 44px;
+    min-width: 40px;
+    min-height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -259,65 +245,57 @@ h1 {
     letter-spacing: 1px;
     user-select: none;
 }
-.tecla:active, .tecla:focus {
-    background: #6edc3b;
-    color: #222;
-    box-shadow: 0 0 0 4px #b2d8b2;
-}
 .tecla-func {
     background: #eaf6e6;
     color: #3FA010;
-    font-size: 1.2rem;
+    font-size: 1.7rem;
     border: 2px solid #b2d8b2;
+    max-width: 72px;
 }
 .tecla[aria-label="Espaço"], .tecla[data-tecla="Espaço"] {
-    min-width: 160px;
-    width: 220px;
-    height: 44px;
+    flex: 3 1 0;
+    min-width: 120px;
+    max-width: 220px;
+    height: 56px;
     border-radius: 22px;
     background: #eaf6e6;
     color: #3FA010;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     border: 2px solid #b2d8b2;
-    margin: 0 2px;
+    margin: 0 4px;
     box-shadow: 0 2px 8px #3FA01022;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
 @media (max-width: 900px) {
     #teclado-virtual {
-        bottom: 80px;
-    }
-    .teclado-bg {
-        padding: 7px 2px 7px 2px;
-        border-radius: 18px;
+        max-width: 98vw;
+        min-width: 0;
+        padding: 10px 2px 2px 2px;
+        bottom: 18px;
     }
     .tecla {
-        width: 28px;
-        height: 28px;
-        font-size: 0.8rem;
-        min-width: 22px;
-        min-height: 28px;
+        max-width: 28px;
+        height: 32px;
+        font-size: 1rem;
+        min-width: 18px;
+        min-height: 32px;
+        border-radius: 8px;
+    }
+    .tecla-func {
+        max-width: 40px;
     }
     .tecla[aria-label="Espaço"], .tecla[data-tecla="Espaço"] {
-        min-width: 80px;
-        width: 120px;
-        height: 28px;
-        border-radius: 14px;
+        min-width: 60px;
+        max-width: 90px;
+        height: 32px;
+        border-radius: 12px;
         font-size: 0.9rem;
     }
     .linha-teclado {
         gap: 3px;
         margin-bottom: 3px;
-    }
-    #cadastro-section input:focus, #cadastro-section input {
-        font-size: 0.53rem;
-        padding: 4.9px 5.6px;
     }
 }
 /* Responsividade para centralizar o formulário e ajustar o teclado na tela de cadastro */
