@@ -192,5 +192,65 @@ function encerrarJogo(venceu) {
 
 restartBtn.addEventListener('click', iniciarJogo);
 
+// Teclado virtual sempre aparente
+const tecladoVirtual = document.getElementById('teclado-virtual');
+let inputAtivo = null;
+let tipoTecladoAtual = null;
+
+function criarTeclado() {
+    // QWERTY em 4 linhas, última só símbolos e espaço
+    const linhas = [
+        ['q','w','e','r','t','y','u','i','o','p'],
+        ['a','s','d','f','g','h','j','k','l'],
+        ['z','x','c','v','b','n','m','←'],
+        ['_','-','Espaço','.','@','OK']
+    ];
+    tecladoVirtual.innerHTML = '';
+    linhas.forEach((linha, idx) => {
+        const divLinha = document.createElement('div');
+        divLinha.className = 'linha-teclado';
+        linha.forEach(tecla => {
+            const btn = document.createElement('button');
+            btn.className = 'tecla' + (['←','Limpar','OK','Espaço'].includes(tecla) ? ' tecla-func' : '');
+            btn.textContent = tecla;
+            if (tecla === 'Espaço') btn.style.minWidth = '120px';
+            btn.onclick = () => teclaClicada(tecla);
+            divLinha.appendChild(btn);
+        });
+        tecladoVirtual.appendChild(divLinha);
+    });
+}
+
+function teclaClicada(tecla) {
+    if (!inputAtivo) return;
+    if (tecla === 'OK') {
+        inputAtivo.blur();
+        inputAtivo = null;
+        return;
+    }
+    if (tecla === 'Limpar') {
+        inputAtivo.value = '';
+        return;
+    }
+    if (tecla === '←') {
+        inputAtivo.value = inputAtivo.value.slice(0, -1);
+        return;
+    }
+    // Limita tamanho para CPF e telefone
+    if (inputAtivo.id === 'cpf' && inputAtivo.value.length >= 11) return;
+    if (inputAtivo.id === 'telefone' && inputAtivo.value.length >= 11) return;
+    inputAtivo.value += tecla;
+}
+
+[nomeInput, telefoneInput, emailInput, cpfInput].forEach(input => {
+    input.addEventListener('focus', function(e) {
+        inputAtivo = e.target;
+        criarTeclado('text');
+    });
+    // Não esconde mais o teclado ao perder foco
+});
+// Inicializa teclado padrão (nome)
+criarTeclado('text');
+
 // Inicialização: mostrar tela de cadastro
 showSection(cadastroSection);
