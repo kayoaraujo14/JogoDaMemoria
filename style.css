@@ -4,6 +4,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     min-height: 100vh;
     height: 100vh;
     max-height: 100vh;
@@ -27,6 +28,15 @@ h1 {
     font-size: 2.2rem;
     box-shadow: 0 2px 8px rgba(63,160,16,0.10);
 }
+#cadastro-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: calc(100vh - 65px);
+    width: 100vw;
+    box-sizing: border-box;
+}
 #cadastro-section, #jogo-section, #premio-section, #fail-section {
     width: 100%;
     max-width: 400px;
@@ -39,20 +49,29 @@ h1 {
     color: #fff;
 }
 #cadastro-section {
+    position: static;
+    left: unset;
+    right: unset;
+    top: unset;
+    bottom: unset;
+    transform: none;
+    margin: 40px auto 0 auto;
+    z-index: 1;
+    max-height: none;
+    min-height: auto;
+    overflow: visible;
     width: 100%;
     max-width: 420px;
-    margin: 150px auto 0 auto;
     background: #fff;
     border-radius: 18px;
     box-shadow: 0 6px 32px 0 rgba(63,160,16,0.18), 0 1.5px 6px 0 rgba(0,0,0,0.08);
     padding: 38px 32px 32px 32px;
-    display: block;
+    display: flex;
+    flex-direction: column;
     color: #222;
-    position: relative;
     animation: fadeIn 0.7s;
-    max-height: calc(100vh - 120px);
-    overflow: auto;
-    margin-bottom: 220px; /* Garante espaço para o teclado virtual em telas grandes */
+    justify-content: center;
+    align-items: center;
 }
 /*#cadastro-section:before {
     content: '';
@@ -192,19 +211,19 @@ h1 {
     to { opacity: 1; transform: translateY(0); }
 }
 #teclado-virtual {
-    position: fixed;
-    left: 50%;
-    bottom: 120px;
-    transform: translateX(-50%);
-    width: auto;
-    min-width: 0;
-    max-width: none;
+    position: static;
+    left: unset;
+    bottom: unset;
+    transform: none;
+    margin: 32px auto 32px auto;
+    width: 100%;
+    max-width: 420px;
     background: transparent;
     border: none;
     border-radius: 0;
     box-shadow: none;
     padding: 0;
-    z-index: 1000;
+    z-index: 1;
     display: flex !important;
     flex-direction: column;
     align-items: center;
@@ -215,29 +234,29 @@ h1 {
 .linha-teclado {
     display: flex;
     justify-content: center;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
     width: 100%;
-    gap: 8px;
+    gap: 4px;
 }
 .linha-teclado:last-child {
     margin-bottom: 0;
 }
 .tecla {
     flex: 1 1 0;
-    max-width: 56px;
-    height: 56px;
+    max-width: 36px;
+    height: 36px;
     background: #3FA010;
     color: #fff;
-    font-size: 1.6rem;
+    font-size: 1.1rem;
     border: none;
-    border-radius: 14px;
+    border-radius: 8px;
     margin: 0;
     font-weight: bold;
     cursor: pointer;
     transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.12s;
     box-shadow: 0 2px 8px #3FA01022;
-    min-width: 40px;
-    min-height: 56px;
+    min-width: 24px;
+    min-height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -248,19 +267,19 @@ h1 {
 .tecla-func {
     background: #eaf6e6;
     color: #3FA010;
-    font-size: 1.7rem;
+    font-size: 1.1rem;
     border: 2px solid #b2d8b2;
-    max-width: 72px;
+    max-width: 48px;
 }
 .tecla[aria-label="Espaço"], .tecla[data-tecla="Espaço"] {
     flex: 3 1 0;
-    min-width: 120px;
-    max-width: 220px;
-    height: 56px;
-    border-radius: 22px;
+    min-width: 70px;
+    max-width: 120px;
+    height: 36px;
+    border-radius: 12px;
     background: #eaf6e6;
     color: #3FA010;
-    font-size: 1.3rem;
+    font-size: 1rem;
     border: 2px solid #b2d8b2;
     margin: 0 4px;
     box-shadow: 0 2px 8px #3FA01022;
@@ -276,57 +295,117 @@ h1 {
         bottom: 18px;
     }
     .tecla {
-        max-width: 28px;
-        height: 32px;
-        font-size: 1rem;
-        min-width: 18px;
-        min-height: 32px;
-        border-radius: 8px;
+        max-width: 24px;
+        height: 28px;
+        min-width: 14px;
+        min-height: 28px;
+        font-size: 0.9rem;
+        border-radius: 6px;
     }
     .tecla-func {
-        max-width: 40px;
-    }
-    .tecla[aria-label="Espaço"], .tecla[data-tecla="Espaço"] {
-        min-width: 60px;
-        max-width: 90px;
-        height: 32px;
-        border-radius: 12px;
+        max-width: 32px;
         font-size: 0.9rem;
     }
+    .tecla[aria-label="Espaço"], .tecla[data-tecla="Espaço"] {
+        min-width: 40px;
+        max-width: 60px;
+        height: 28px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+    }
     .linha-teclado {
-        gap: 3px;
-        margin-bottom: 3px;
+        gap: 2px;
+        margin-bottom: 2px;
     }
 }
-/* Responsividade para centralizar o formulário e ajustar o teclado na tela de cadastro */
-@media (min-height: 900px) {
+@media (max-width: 600px), (max-height: 500px) {
+  #teclado-virtual {
+    max-width: 99vw;
+    margin-top: 6px;
+  }
+  .tecla {
+    max-width: 18px;
+    height: 20px;
+    min-width: 10px;
+    min-height: 20px;
+    font-size: 0.7rem;
+    border-radius: 4px;
+  }
+  .tecla-func {
+    max-width: 22px;
+    font-size: 0.7rem;
+  }
+  .tecla[aria-label="Espaço"], .tecla[data-tecla="Espaço"] {
+    min-width: 24px;
+    max-width: 36px;
+    height: 20px;
+    border-radius: 6px;
+    font-size: 0.6rem;
+  }
+  .linha-teclado {
+    gap: 1px;
+    margin-bottom: 1px;
+  }
+}
+@media (min-aspect-ratio: 16/9) and (min-width: 1200px) {
   #cadastro-section {
-    margin-top: 10vh;
+    bottom: 220px;
+    top: auto;
     margin-bottom: 0;
-    max-height: 70vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    max-width: 420px;
   }
   #teclado-virtual {
-    bottom: 18vh;
+    left: 50%;
+    bottom: 7vh;
+    max-width: 540px;
+    min-width: 320px;
+    padding-bottom: 0;
+  }
+}
+@media (min-aspect-ratio: 21/9) and (min-width: 1600px) {
+  #cadastro-section {
+    bottom: 260px;
+    top: auto;
+    margin-bottom: 0;
+    max-width: 440px;
+  }
+  #teclado-virtual {
+    left: 50%;
+    bottom: 6vh;
+    max-width: 600px;
+    min-width: 340px;
+    padding-bottom: 0;
+  }
+}
+@media (min-height: 700px) {
+  #cadastro-section {
+    min-height: 0;
+    max-height: 90vh;
+    margin-top: calc(50vh - 270px);
+    margin-bottom: 0;
+    justify-content: center;
+    align-items: center;
   }
 }
 @media (max-width: 900px), (max-height: 700px) {
   #cadastro-section {
-    margin-bottom: 120px;
+    margin-top: 18px;
+    max-width: 98vw;
+    padding: 18px 4vw 18px 4vw;
+  }
+  #teclado-virtual {
+    margin: 18px auto 18px auto;
+    max-width: 98vw;
   }
 }
 @media (max-width: 600px), (max-height: 500px) {
   #cadastro-section {
-    margin-bottom: 60px;
+    margin-top: 8px;
+    max-width: 99vw;
+    padding: 10px 2vw 10px 2vw;
   }
-}
-@media (min-aspect-ratio: 16/9) and (min-width: 900px) {
   #teclado-virtual {
-    bottom: 8vh;
-  }
-  #cadastro-section {
-    margin-bottom: 120px;
+    margin: 8px auto 8px auto;
+    max-width: 99vw;
   }
 }
