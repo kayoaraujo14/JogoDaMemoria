@@ -23,7 +23,7 @@ const tentativasSpan = document.getElementById('tentativas');
 const tecladoVirtual = document.getElementById('teclado-virtual');
 
 // Variáveis do jogo
-const icons = ['🍏','🍉','🍇','🍌','🍓','🍍','🍒','🥝','🍋','🥥']; // 10 pares
+const icons = ['💵', '💳', '🏦', '💰', '📈', '📉', '💸', '🪙', '🏧', '💷']; // 10 pares relacionados a banco e dinheiro
 let cards = [];
 let flippedCards = [];
 let lockBoard = false;
