@@ -151,3 +151,15 @@ input {
 .tecla-func:hover {
   background-color: #147a45;
 }
+/* Footer fixado e centralizado */
+#footer {
+  /*background-color: #1a3c34; /* verde escuro institucional */
+  color: black;
+  text-align: center;
+  padding: 1px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: 14px;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+}
