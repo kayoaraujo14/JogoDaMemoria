@@ -23,7 +23,7 @@ const tentativasSpan = document.getElementById('tentativas');
 const tecladoVirtual = document.getElementById('teclado-virtual');
 
 // Variáveis do jogo
-const icons = ['💵', '💳', '🏦', '💰', '📈', '📉', '💸', '🪙', '🏧', '💷']; // 10 pares relacionados a banco e dinheiro
+const icons = ['💵', '💳', '🏦', '💰', '📈', '📉', '💸', '🪙', '🏧', '💷'];
 let cards = [];
 let flippedCards = [];
 let lockBoard = false;
@@ -45,6 +45,9 @@ function showSection(section) {
   [cadastroSection, jogoSection, premioSection, failSection].forEach(sec => sec.style.display = 'none');
   section.style.display = 'block';
   tecladoVirtual.style.display = section === cadastroSection ? 'block' : 'none';
+  if (section === cadastroSection) {
+    nomeInput.focus();
+  }
 }
 
 // Validação e controle de CPF
@@ -62,6 +65,45 @@ function marcarCPFusado(cpf) {
   usados.push(cpf);
   localStorage.setItem('cpfs_usados', JSON.stringify(usados));
 }
+
+function salvarDadosJogador(nome, telefone, email, cpf) {
+  const jogadores = JSON.parse(localStorage.getItem('jogadores') || '[]');
+  jogadores.push({ nome, telefone, email, cpf });
+  localStorage.setItem('jogadores', JSON.stringify(jogadores));
+}
+
+function baixarCSV() {
+  const jogadores = JSON.parse(localStorage.getItem('jogadores') || '[]');
+  if (jogadores.length === 0) return alert('Nenhum dado para exportar.');
+
+  const linhas = ["Nome,Telefone,Email,CPF"];
+  jogadores.forEach(j => {
+    linhas.push(`"${j.nome}","${j.telefone}","${j.email}","${j.cpf}"`);
+  });
+
+  const blob = new Blob([linhas.join("\n")], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'jogadores.csv';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  // Limpa os dados do localStorage após exportar
+  localStorage.removeItem('jogadores');
+  localStorage.removeItem('cpfs_usados');
+
+  // Limpa variáveis em memória
+  // Se houver variáveis globais relacionadas, zere-as aqui
+  // Por segurança, recarrega a página para garantir limpeza total
+  setTimeout(() => { location.reload(); }, 300);
+}
+
+const botaoCSV = document.createElement('button');
+botaoCSV.textContent = 'Baixar CSV';
+botaoCSV.id = 'baixar-csv';
+botaoCSV.onclick = baixarCSV;
+cadastroSection.insertBefore(botaoCSV, cadastroSection.firstElementChild);
 
 // Submissão do formulário
 cadastroForm.onsubmit = function (e) {
@@ -87,11 +129,11 @@ cadastroForm.onsubmit = function (e) {
   }
 
   jogadorCPF = cpf;
+  salvarDadosJogador(nome, telefone, email, cpf);
   showSection(jogoSection);
   iniciarJogo();
 };
 
-// Iniciar o jogo
 function iniciarJogo() {
   board.innerHTML = '';
   tentativas = 0;
@@ -137,7 +179,6 @@ function iniciarJogo() {
   }, 1000);
 }
 
-// Temporizador do jogo
 function iniciarContagemJogo() {
   let tempo = 60;
   jogoTimer.textContent = 'Tempo: 60s';
@@ -154,7 +195,6 @@ function iniciarContagemJogo() {
   }, 60000);
 }
 
-// Virar carta
 function flipCard() {
   if (lockBoard || this.classList.contains('flipped') || this.classList.contains('matched')) return;
 
@@ -169,7 +209,6 @@ function flipCard() {
   }
 }
 
-// Verificar par
 function checkForMatch() {
   lockBoard = true;
   const [card1, card2] = flippedCards;
@@ -195,7 +234,6 @@ function checkForMatch() {
   }
 }
 
-// Fim do jogo
 function encerrarJogo(venceu) {
   clearTimeout(memorizarTimeout);
   clearTimeout(jogoTimeout);
@@ -205,7 +243,6 @@ function encerrarJogo(venceu) {
   showSection(venceu ? premioSection : failSection);
 }
 
-// Botões de voltar
 document.getElementById('voltar-cadastro-premio').onclick = resetarCadastro;
 document.getElementById('voltar-cadastro-fail').onclick = resetarCadastro;
 
@@ -216,7 +253,6 @@ function resetarCadastro() {
   nomeInput.focus();
 }
 
-// Teclado virtual
 let inputAtivo = null;
 
 function criarTeclado(tipo = 'text') {
@@ -225,13 +261,13 @@ function criarTeclado(tipo = 'text') {
       ['1','2','3'],
       ['4','5','6'],
       ['7','8','9'],
-      ['0','←','OK']
+      ['0','←','Próximo']
     ],
     text: [
       ['q','w','e','r','t','y','u','i','o','p'],
-      ['a','s','d','f','g','h','j','k','l'],
-      ['z','x','c','v','b','n','m'],
-      ['_','-','Espaço','.','@','←','OK']
+      ['a','s','d','f','g','h','j','k','l','←'],
+      ['z','x','c','v','b','n','m','Próximo'],
+      ['_','-','Espaço','.','@']
     ]
   };
   tecladoVirtual.innerHTML = '';
@@ -240,7 +276,7 @@ function criarTeclado(tipo = 'text') {
     div.className = 'linha-teclado';
     linha.forEach(tecla => {
       const btn = document.createElement('button');
-      btn.className = 'tecla' + (['←','OK','Espaço'].includes(tecla) ? ' tecla-func' : '');
+      btn.className = 'tecla' + (['←','Próximo','Espaço'].includes(tecla) ? ' tecla-func' : '');
       btn.textContent = tecla;
       if (tecla === 'Espaço') btn.style.minWidth = '120px';
       btn.onclick = () => teclaClicada(tecla);
@@ -252,7 +288,17 @@ function criarTeclado(tipo = 'text') {
 
 function teclaClicada(tecla) {
   if (!inputAtivo) return;
-  if (tecla === 'OK') return inputAtivo.blur();
+  if (tecla === 'Próximo') {
+    // Avança para o próximo campo do formulário
+    const campos = [nomeInput, telefoneInput, emailInput, cpfInput];
+    const idx = campos.indexOf(inputAtivo);
+    if (idx !== -1 && idx < campos.length - 1) {
+      campos[idx + 1].focus();
+    } else if (idx === campos.length - 1) {
+      inputAtivo.blur();
+    }
+    return;
+  }
   if (tecla === '←') return inputAtivo.value = inputAtivo.value.slice(0, -1);
   if (tecla === 'Espaço') return inputAtivo.value += ' ';
   if (inputAtivo.id === 'cpf' && inputAtivo.value.length >= 11) return;
@@ -260,7 +306,6 @@ function teclaClicada(tecla) {
   inputAtivo.value += tecla;
 }
 
-// Ativar teclado nos inputs
 [nomeInput, telefoneInput, emailInput, cpfInput].forEach(input => {
   input.addEventListener('focus', (e) => {
     inputAtivo = e.target;
@@ -270,6 +315,5 @@ function teclaClicada(tecla) {
   });
 });
 
-// Início do jogo: mostrar tela de cadastro
 showSection(cadastroSection);
 criarTeclado('text');

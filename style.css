@@ -28,6 +28,7 @@ button {
   cursor: pointer;
   box-shadow: 0 3px 6px rgba(0,0,0,0.1);
   transition: background-color 0.3s ease;
+  margin-top: 12px; /* Espaço entre botões e outros elementos */
 }
 
 button:hover {
@@ -58,6 +59,17 @@ input {
   color: #c62828;
   text-align: center;
   font-weight: bold;
+}
+
+/* Botão baixar CSV - mesma estilização dos botões padrão, agora posicionado no cabeçalho */
+#baixar-csv {
+  width: fit-content;
+  align-self: flex-end;
+  margin: 16px 32px 0 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
 }
 
 /* Tabuleiro do jogo */
@@ -151,6 +163,7 @@ input {
 .tecla-func:hover {
   background-color: #147a45;
 }
+
 /* Footer fixado e centralizado */
 #footer {
   /*background-color: #1a3c34; /* verde escuro institucional */
