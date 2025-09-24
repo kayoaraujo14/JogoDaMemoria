@@ -1,4 +1,4 @@
-  const board = document.getElementById('game-board');
+const board = document.getElementById('game-board');
 
   // Seções do jogo
   const cadastroSection = document.getElementById('cadastro-section');
@@ -274,7 +274,22 @@
   let inputAtivo = null;
 
 function criarTeclado(tipo = 'text') {
-  const teclado = {
+  modoTeclado = tipo;
+  tecladoVirtual.innerHTML = '';
+  // Botão de alternância
+  const toggleBtn = document.createElement('button');
+  toggleBtn.className = 'teclado-toggle';
+  if (modoTeclado === 'text') toggleBtn.textContent = '123 / @';
+  else if (modoTeclado === 'number') toggleBtn.textContent = 'ABC / @';
+  else toggleBtn.textContent = 'ABC / 123';
+  toggleBtn.onclick = () => {
+    if (modoTeclado === 'text') criarTeclado('number');
+    else if (modoTeclado === 'number') criarTeclado('special');
+    else criarTeclado('text');
+  };
+  tecladoVirtual.appendChild(toggleBtn);
+
+  const teclados = {
     number: [
       ['1','2','3'],
       ['4','5','6'],
@@ -286,10 +301,15 @@ function criarTeclado(tipo = 'text') {
       ['a','s','d','f','g','h','j','k','l','←'],
       ['z','x','c','v','b','n','m','Próximo'],
       ['_','-','Espaço','.','@']
+    ],
+    special: [
+      ['!','?','#','$','%','&','*','(',')','/'],
+      ['[',']','{','}','<','>','|','\\','"',' 27'],
+      ['@','.','_','-','Próximo'],
+      ['←','Espaço']
     ]
   };
-  tecladoVirtual.innerHTML = '';
-  teclado[tipo].forEach(linha => {
+  teclados[modoTeclado].forEach(linha => {
     const div = document.createElement('div');
     div.className = 'linha-teclado';
     linha.forEach(tecla => {

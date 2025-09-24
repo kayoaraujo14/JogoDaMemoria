@@ -1,93 +1,120 @@
 /* Reset e base */
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f5fef8; /* fundo claro esverdeado */
-  color: #1a3c34; /* verde escuro para contraste e legibilidade */
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #f5fef8;
+  color: #1a3c34;
+  width: 100vw;
+  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+main#main-container {
+  width: 100vw;
+  height: calc(100vh - 48px);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 0;
 }
 
 section {
   display: none;
-  padding: 20px;
-  max-width: 900px;
-  margin: auto;
-}
-
-h1, h2 {
-  color: #1a3c34;
-  text-align: center;
-}
-
-button {
-  background-color: #1a8c55; /* verde institucional principal */
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 12px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-  transition: background-color 0.3s ease;
-  margin-top: 12px; /* Espaço entre botões e outros elementos */
-}
-
-button:hover {
-  background-color: #147a45;
+  padding: 16px 18px;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
 }
 
 /* Tela de cadastro */
 #cadastro-section {
-  background: url('') no-repeat center center fixed;
-  background-size: cover;
-  min-height: 100vh;
-  min-width: 100vw;
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
+  width: 480px;
+  min-width: 480px;
+  margin-top: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding: 18px 0 12px 0;
+}
+
+#cadastro-section header {
+  width: 100%;
+  display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
-  padding: 0;
-  margin: 0;
+}
+
+#cadastro-section h1 {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto 18px auto;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a3c34;
+}
+
+#cadastro-section h2, #cadastro-section .cadastro-titulo {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto 18px auto;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a3c34;
 }
 
 #cadastro-form {
+  max-width: 260px;
+  width: 100%;
+  margin: auto;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-width: 400px;
-  margin: auto;
-  background: white;
-  padding: 24px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  position: relative;
-  z-index: 2;
 }
 
 input {
-  padding: 10px;
-  border: 1px solid #cde8da;
-  border-radius: 6px;
-  font-size: 16px;
+  padding: 8px;
+  border: 1.2px solid #cde8da;
+  border-radius: 7px;
+  font-size: 15px;
+  background: #f8fcfa;
+  transition: border-color 0.2s;
+}
+input:focus {
+  border-color: #1a8c55;
+  outline: none;
 }
 
 #cadastro-erro {
   color: #c62828;
   text-align: center;
   font-weight: bold;
+  margin-top: 6px;
 }
 
 /* Botão baixar CSV - mesma estilização dos botões padrão, agora posicionado no cabeçalho */
 #baixar-csv {
-  position: fixed;
-  top: 0;
-  right: 0;
-  margin: 20px 32px 0 0;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  margin: 0;
   z-index: 10;
   width: fit-content;
   align-self: flex-end;
@@ -97,36 +124,56 @@ input {
 #game-board {
   display: grid;
   justify-content: center;
-  margin-top: 20px;
+  margin: 12px auto 0 auto;
+  grid-template-columns: repeat(5, 72px);
+  grid-gap: 10px;
+  width: 380px;
+  max-width: 95vw;
+  min-height: 150px;
 }
 
 .card {
-  width: 120px;
-  height: 120px;
-  background: transparent;
-  border-radius: 20px;
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
   display: flex;
   align-items: stretch;
   justify-content: stretch;
-  box-shadow: 0 8px 24px rgba(15,82,31,0.18), 0 2px 8px rgba(0,0,0,0.10);
-  transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s;
+  box-shadow: 0 4px 12px rgba(15,82,31,0.13), 0 1px 4px rgba(0,0,0,0.08);
+  transition: transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.18s;
   user-select: none;
   cursor: pointer;
   overflow: hidden;
-  border: 2.5px solid #1a8c55;
+  border: 2px solid #1a8c55;
   position: relative;
+  padding: 0;
+  background: #f8fcfa;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: box-shadow 0.2s, filter 0.2s;
+  border: none;
+  background: none;
+  filter: brightness(0.98) saturate(1.12) drop-shadow(0 1px 4px rgba(26,60,52,0.06));
+  display: block;
+  margin: 0;
   padding: 0;
 }
 
 .card:hover:not(.flipped):not(.matched) {
-  transform: scale(1.07) translateY(-6px);
-  box-shadow: 0 16px 40px rgba(16,80,40,0.22), 0 4px 12px rgba(0,0,0,0.13);
+  transform: scale(1.05) translateY(-3px);
+  box-shadow: 0 8px 20px rgba(16,80,40,0.16), 0 2px 6px rgba(0,0,0,0.10);
   border-color: #2ecc71;
 }
 
 .card.flipped, .card.matched {
-  background: transparent;
-  box-shadow: 0 4px 16px rgba(26,60,52,0.13);
+  background: #f8fcfa;
+  box-shadow: 0 2px 8px rgba(26,60,52,0.10);
 }
 
 .card.matched {
@@ -148,39 +195,51 @@ input {
   visibility: visible;
 }
 
-.card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 18px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-  transition: box-shadow 0.3s, filter 0.3s;
-  border: none;
-  background: none;
-  filter: brightness(0.98) saturate(1.15) drop-shadow(0 2px 8px rgba(26,60,52,0.08));
-  display: block;
-  margin: 0;
-  padding: 0;
-}
-
 .card.flipped img,
 .card.matched img {
-  box-shadow: 0 8px 24px rgba(26,60,52,0.13);
-  filter: brightness(1) saturate(1.2);
+  box-shadow: 0 4px 12px rgba(26,60,52,0.10);
+  filter: brightness(1) saturate(1.15);
 }
 
 .card:active {
   transform: scale(0.97);
 }
 
-@media (max-width: 600px) {
-  .card {
-    width: 80px;
-    height: 80px;
-    border-radius: 14px;
+@media (max-width: 1400px) {
+  #game-board {
+    width: 540px;
+    grid-template-columns: repeat(5, 100px);
+    grid-gap: 16px;
   }
-  .card img {
-    border-radius: 14px;
+  .card {
+    width: 100px;
+    height: 100px;
+    border-radius: 16px;
+  }
+  #cadastro-section {
+    width: 340px;
+    padding: 24px 0 16px 0;
+  }
+}
+
+@media (max-width: 900px) {
+  #game-board {
+    width: 340px;
+    grid-template-columns: repeat(4, 72px);
+    grid-gap: 10px;
+  }
+  .card {
+    width: 72px;
+    height: 72px;
+    border-radius: 10px;
+  }
+  #cadastro-section {
+    width: 95vw;
+    padding: 10px 0 10px 0;
+  }
+  #cadastro-form {
+    max-width: 95vw;
+    padding: 10px;
   }
 }
 
@@ -189,20 +248,21 @@ input {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 4px;
 }
 
 #timers-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 32px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  gap: 18px;
+  margin-top: 6px;
+  margin-bottom: 6px;
 }
 
 #memorizar-timer, #jogo-timer, #tentativas {
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
   color: #1a3c34;
   font-weight: bold;
   margin: 0;
@@ -211,6 +271,7 @@ input {
 /* Telas de premiação e falha */
 #premio-section, #fail-section {
   text-align: center;
+  padding: 18px 0;
 }
 
 #premio-section h2 {
@@ -223,50 +284,117 @@ input {
 
 /* Teclado virtual */
 #teclado-virtual {
-  margin-top: 30px;
+  width: 480px;
+  max-width: 98vw;
+  margin-top: 24px;
   text-align: center;
+  background: #f8fcfa;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 18px 0 12px 0;
 }
 
 .linha-teclado {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 8px;
   margin-bottom: 10px;
 }
 
 .tecla {
-  padding: 10px 14px;
-  margin: 4px;
-  border: 1px solid #cde8da;
-  background-color: #ffffff;
-  border-radius: 6px;
+  padding: 14px 0;
+  margin: 0 4px;
+  border: none;
+  background-color: #e0f4e8;
+  border-radius: 14px;
   font-size: 18px;
   cursor: pointer;
-  min-width: 36px;
-  color: black; /* Define a cor da letra como preta */
+  min-width: 32px;
+  width: 32px;
+  color: #1a3c34;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-weight: 500;
+  transition: background 0.2s, box-shadow 0.2s;
+  outline: none;
 }
 
-.tecla:hover {
-  background-color: #e0f4e8;
+.tecla:active {
+  background-color: #b2e2c7;
 }
 
 .tecla-func {
   background-color: #1a8c55;
   color: white;
+  min-width: 60px;
+  width: auto;
+  font-weight: 600;
 }
 
 .tecla-func:hover {
   background-color: #147a45;
 }
 
-/* Footer fixado e centralizado */
-#footer {
-  background-color: rgba(255,255,255,0.85); /* fundo branco translúcido para contraste */
-  color: #1a3c34;
-  text-align: center;
-  padding: 8px 0 4px 0;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
-  font-size: 14px;
-  box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
-  z-index: 100;
+.tecla[style*="min-width: 120px"] {
+  min-width: 120px !important;
+  width: 120px !important;
+}
+
+button[type="submit"], #voltar-cadastro-premio, #voltar-cadastro-fail {
+  background: linear-gradient(90deg, #1a8c55 0%, #2ecc71 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 12px 0;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(26,140,85,0.10), 0 1px 4px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+  margin-top: 10px;
+  letter-spacing: 0.5px;
+}
+button[type="submit"]:hover, #voltar-cadastro-premio:hover, #voltar-cadastro-fail:hover {
+  background: linear-gradient(90deg, #147a45 0%, #27ae60 100%);
+  box-shadow: 0 4px 16px rgba(26,140,85,0.18), 0 2px 8px rgba(0,0,0,0.10);
+  transform: translateY(-2px) scale(1.03);
+}
+
+/* Teclado virtual - botão de alternância */
+#teclado-virtual .teclado-toggle {
+  display: block;
+  margin: 0 auto 12px auto;
+  background: linear-gradient(90deg, #1a8c55 0%, #2ecc71 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  box-shadow: 0 2px 8px rgba(26,140,85,0.10);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+#teclado-virtual .teclado-toggle:hover {
+  background: linear-gradient(90deg, #147a45 0%, #27ae60 100%);
+  box-shadow: 0 4px 16px rgba(26,140,85,0.18);
+  transform: translateY(-2px) scale(1.03);
+}
+
+@media (max-width: 500px) {
+  #teclado-virtual {
+    width: 98vw;
+    padding: 10px 0 8px 0;
+  }
+  .tecla {
+    font-size: 16px;
+    min-width: 26px;
+    width: 26px;
+    padding: 10px 0;
+  }
+  .tecla-func {
+    min-width: 40px;
+  }
 }
